@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Livros</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-searchbar
+    [(ngModel)]="termo"
+    placeholder="Buscar livro ou autor"
+    (keyup.enter)="buscar()"
+  ></ion-searchbar>
+  <ion-button expand="block" shape="round" (click)="buscar()">Buscar</ion-button>
+
+  @if (carregando) {
+    <div class="centro"><ion-spinner></ion-spinner></div>
+  } @else {
+    @for (livro of livros; track livro.id) {
+      <ion-card button [routerLink]="['/detalhes', livro.id]">
+        <div class="linha-livro">
+          @if (livro.capa) {
+            <img class="capa-pequena" [src]="livro.capa" [alt]="livro.titulo" />
+          } @else {
+            <div class="capa-pequena sem-capa">📖</div>
+          }
+          <div>
+            <ion-card-header>
+              <ion-card-subtitle>{{ livro.autor }}</ion-card-subtitle>
+              <ion-card-title class="titulo-livro">{{ livro.titulo }}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>Publicado em {{ livro.ano }}</ion-card-content>
+          </div>
+        </div>
+      </ion-card>
+    } @empty {
+      <p class="centro">Nenhum livro encontrado.</p>
+    }
+  }
+</ion-content>

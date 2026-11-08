@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Favoritos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  @for (livro of favoritos; track livro.id) {
+    <ion-card>
+      <div class="linha-livro">
+        @if (livro.capa) {
+          <img class="capa-pequena" [src]="livro.capa" [alt]="livro.titulo" />
+        } @else {
+          <div class="capa-pequena sem-capa">📖</div>
+        }
+        <div>
+          <ion-card-header>
+            <ion-card-title class="titulo-livro">{{ livro.titulo }}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-button size="small" shape="round" [routerLink]="['/detalhes', livro.id]">
+              Ver detalhes
+            </ion-button>
+            <ion-button size="small" shape="round" color="danger" fill="outline" (click)="remover(livro.id)">
+              Remover
+            </ion-button>
+          </ion-card-content>
+        </div>
+      </div>
+    </ion-card>
+  } @empty {
+    <div class="centro">
+      <p>Você ainda não favoritou nenhum livro. <br />Abra um livro e toque em "Adicionar aos favoritos".</p>
+    </div>
+  }
+</ion-content>

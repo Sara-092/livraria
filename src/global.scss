@@ -1,37 +1,84 @@
-/*
- * App Global CSS
- * ----------------------------------------------------------------------------
- * Put style rules here that you want to apply globally. These styles are for
- * the entire app and not just one component. Additionally, this file can be
- * used as an entry point to import other CSS/Sass files to be included in the
- * output CSS.
- * For more information on global stylesheets, visit the documentation:
- * https://ionicframework.com/docs/layout/global-stylesheets
- */
 
-/* Core CSS required for Ionic components to work properly */
-@import "@ionic/angular/css/core.css";
+.hero {
+  background: linear-gradient(135deg, #d9abdf, #0655ff);
+  color: rgb(252, 249, 249);
+  text-align: center;
+  padding: 40px 20px;
+  border-radius: 0 0 24px 24px;
 
-/* Basic CSS for apps built with Ionic */
-@import "@ionic/angular/css/normalize.css";
-@import "@ionic/angular/css/structure.css";
-@import "@ionic/angular/css/typography.css";
-@import "@ionic/angular/css/display.css";
+  h1 {
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
 
-/* Optional CSS utils that can be commented out */
-@import "@ionic/angular/css/padding.css";
-@import "@ionic/angular/css/float-elements.css";
-@import "@ionic/angular/css/text-alignment.css";
-@import "@ionic/angular/css/text-transformation.css";
-@import "@ionic/angular/css/flex-utils.css";
+  p {
+    margin-bottom: 20px;
+    opacity: 0.9;
+  }
+}
 
-/**
- * Ionic Dark Mode
- * -----------------------------------------------------
- * For more info, please see:
- * https://ionicframework.com/docs/theming/dark-mode
- */
+.titulo-secao {
+  margin: 20px 16px 8px;
+  font-weight: bold;
+}
 
-/* @import "@ionic/angular/css/palettes/dark.always.css"; */
-/* @import "@ionic/angular/css/palettes/dark.class.css"; */
-@import '@ionic/angular/css/palettes/dark.system.css';
+.centro {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+}
+
+.capa-grande {
+  display: block;
+  height: 320px;
+  width: auto;
+  max-width: 90%;
+  margin: 20px auto 8px;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+.linha-livro {
+  display: flex;
+  align-items: center;
+}
+
+.capa-pequena {
+  width: 90px;
+  height: 130px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.sem-capa {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e0e0e0;
+  font-size: 32px;
+}
+
+.titulo-livro {
+  font-size: 18px;
+}
+
+.capa-detalhe {
+  width: 200px;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+.titulo-detalhe {
+  font-weight: bold;
+  text-align: center;
+  margin-top: 16px;
+}
+
+.descricao {
+  line-height: 1.6;
+  white-space: pre-line;
+}
+

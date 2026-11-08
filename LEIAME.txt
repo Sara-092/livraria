@@ -1,0 +1,11 @@
+COMO RODAR O PROJETO
+
+1. Extraia o .zip e abra a pasta "livraria" no VS Code
+2. Abra o terminal (Ctrl + ') dentro da pasta e rode:
+
+      npm install
+      npm start
+
+3. O navegador abre sozinho em http://localhost:4200
+
+Requisitos: Node.js 18.19+ (ou 20+). Verifique com: node --version

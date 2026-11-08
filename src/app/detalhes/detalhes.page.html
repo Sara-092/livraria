@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/lista"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Detalhes</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  @if (carregando) {
+    <div class="centro"><ion-spinner></ion-spinner></div>
+  } @else if (livro) {
+    <div class="centro">
+      @if (livro.capa) {
+        <img class="capa-detalhe" [src]="livro.capa" [alt]="livro.titulo" />
+      }
+    </div>
+
+    <h1 class="titulo-detalhe">{{ livro.titulo }}</h1>
+
+    <ion-button
+      expand="block"
+      shape="round"
+      [color]="favorito ? 'danger' : 'primary'"
+      (click)="alternarFavorito()"
+    >
+      @if (favorito) {
+         Remover dos favoritos
+      } @else {
+         Adicionar aos favoritos
+      }
+    </ion-button>
+
+    <p><strong>Primeira publicação:</strong> {{ livro.data }}</p>
+
+    <h3>Sobre o livro</h3>
+    <p class="descricao">{{ livro.descricao }}</p>
+
+    <h3>Assuntos</h3>
+    @for (assunto of livro.assuntos; track assunto) {
+      <ion-chip color="primary">{{ assunto }}</ion-chip>
+    } @empty {
+      <p>Sem assuntos cadastrados.</p>
+    }
+  } @else {
+    <p class="centro">Não foi possível carregar este livro.</p>
+  }
+</ion-content>
