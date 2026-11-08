@@ -1,0 +1,7 @@
+{
+  "name": "livraria",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
