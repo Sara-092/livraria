@@ -1,7 +1,6 @@
-
 .hero {
-  background: linear-gradient(135deg, #d9abdf, #0655ff);
-  color: rgb(252, 249, 249);
+  background: linear-gradient(135deg, #c6d7f5, #7883f5);
+  color: white;
   text-align: center;
   padding: 40px 20px;
   border-radius: 0 0 24px 24px;
@@ -15,6 +14,18 @@
   p {
     margin-bottom: 20px;
     opacity: 0.9;
+  }
+}
+
+.categorias {
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  padding: 4px 12px 8px;
+
+  ion-chip {
+    flex-shrink: 0;
+    cursor: pointer;
   }
 }
 
@@ -77,8 +88,14 @@
   margin-top: 16px;
 }
 
-.descricao {
-  line-height: 1.6;
-  white-space: pre-line;
+.frase {
+  font-style: italic;
+  border-left: 4px solid #3880ff;
+  padding: 4px 12px;
+  margin: 8px 0;
 }
 
+ion-toolbar {
+  --background: #9474c0;
+  --color: white;
+}

@@ -1,25 +1,30 @@
 import { Routes } from '@angular/router';
 
+import { HomePage } from './home/home.page';
+import { ListaPage } from './lista/lista.page';
+import { DetalhesPage } from './detalhes/detalhes.page';
+import { FavoritosPage } from './favoritos/favoritos.page';
+
 export const routes: Routes = [
   {
     path: 'home',
-    loadComponent: () => import('./home/home.page').then((m) => m.HomePage),
+    component: HomePage
   },
   {
     path: 'lista',
-    loadComponent: () => import('./lista/lista.page').then((m) => m.ListaPage),
+    component: ListaPage
   },
   {
     path: 'detalhes/:id',
-    loadComponent: () => import('./detalhes/detalhes.page').then((m) => m.DetalhesPage),
+    component: DetalhesPage
   },
   {
     path: 'favoritos',
-    loadComponent: () => import('./favoritos/favoritos.page').then((m) => m.FavoritosPage),
+    component: FavoritosPage
   },
   {
     path: '',
     redirectTo: 'home',
-    pathMatch: 'full',
-  },
+    pathMatch: 'full'
+  }
 ];

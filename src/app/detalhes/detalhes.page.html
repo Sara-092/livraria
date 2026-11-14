@@ -1,23 +1,21 @@
 <ion-header>
-  <ion-toolbar color="primary">
+  <ion-toolbar >
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/lista"></ion-back-button>
+      <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
     <ion-title>Detalhes</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-  @if (carregando) {
-    <div class="centro"><ion-spinner></ion-spinner></div>
-  } @else if (livro) {
+  @if (livro) {
     <div class="centro">
-      @if (livro.capa) {
-        <img class="capa-detalhe" [src]="livro.capa" [alt]="livro.titulo" />
+      @if (livro.cover_id) {
+        <img class="capa-detalhe" [src]="'https://covers.openlibrary.org/b/id/' + livro.cover_id + '-L.jpg'" [alt]="livro.title" />
       }
     </div>
 
-    <h1 class="titulo-detalhe">{{ livro.titulo }}</h1>
+    <h1 class="titulo-detalhe">{{ livro.title }}</h1>
 
     <ion-button
       expand="block"
@@ -32,18 +30,37 @@
       }
     </ion-button>
 
-    <p><strong>Primeira publicação:</strong> {{ livro.data }}</p>
+    <p><strong>Autor:</strong> {{ livro.authors?.[0]?.name ?? 'Autor desconhecido' }}</p>
+    <p><strong>Primeira publicação:</strong> {{ livro.first_publish_year ?? 'Não informada' }}</p>
 
-    <h3>Sobre o livro</h3>
-    <p class="descricao">{{ livro.descricao }}</p>
+    @if (livro.edition_count) {
+      <p><strong>Edições publicadas:</strong> {{ livro.edition_count }}</p>
+    }
 
-    <h3>Assuntos</h3>
-    @for (assunto of livro.assuntos; track assunto) {
-      <ion-chip color="primary">{{ assunto }}</ion-chip>
-    } @empty {
-      <p>Sem assuntos cadastrados.</p>
+    @if (livro.pages) {
+      <p><strong>Páginas (média das edições):</strong> {{ livro.pages }}</p>
+    }
+
+    @if (livro.rating) {
+      <p><strong>Nota média dos leitores:</strong> {{ livro.rating.toFixed(1) }} de 5</p>
+    }
+
+    @if (livro.language?.length) {
+      <p><strong>Idiomas das edições:</strong> {{ livro.language.slice(0, 6).join(', ') }}</p>
+    }
+
+    @if (livro.first_sentence) {
+      <h3>Primeira frase</h3>
+      <p class="frase">{{ livro.first_sentence }}</p>
+    }
+
+    @if (livro.subject?.length) {
+      <h3>Assuntos</h3>
+      @for (assunto of livro.subject; track assunto) {
+        <ion-chip color="primary">{{ assunto }}</ion-chip>
+      }
     }
   } @else {
-    <p class="centro">Não foi possível carregar este livro.</p>
+    <p class="centro">Livro não encontrado. Volte à Home e abra o livro novamente.</p>
   }
 </ion-content>

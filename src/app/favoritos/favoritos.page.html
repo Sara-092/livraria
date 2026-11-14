@@ -1,30 +1,31 @@
 <ion-header>
-  <ion-toolbar color="primary">
+  <ion-toolbar >
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
-    <ion-title>Favoritos</ion-title>
+    <ion-title> Favoritos</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-  @for (livro of favoritos; track livro.id) {
+  @for (livro of favoritos; track livro.key) {
     <ion-card>
       <div class="linha-livro">
-        @if (livro.capa) {
-          <img class="capa-pequena" [src]="livro.capa" [alt]="livro.titulo" />
+        @if (livro.cover_id) {
+          <img class="capa-pequena" [src]="'https://covers.openlibrary.org/b/id/' + livro.cover_id + '-M.jpg'" [alt]="livro.title" />
         } @else {
           <div class="capa-pequena sem-capa">📖</div>
         }
         <div>
           <ion-card-header>
-            <ion-card-title class="titulo-livro">{{ livro.titulo }}</ion-card-title>
+            <ion-card-subtitle>{{ livro.authors?.[0]?.name ?? 'Autor desconhecido' }}</ion-card-subtitle>
+            <ion-card-title class="titulo-livro">{{ livro.title }}</ion-card-title>
           </ion-card-header>
           <ion-card-content>
-            <ion-button size="small" shape="round" [routerLink]="['/detalhes', livro.id]">
+            <ion-button size="small" shape="round" [routerLink]="['/detalhes', livro.key.replace('/works/', '')]">
               Ver detalhes
             </ion-button>
-            <ion-button size="small" shape="round" color="danger" fill="outline" (click)="remover(livro.id)">
+            <ion-button size="small" shape="round" color="danger" fill="outline" (click)="remover(livro.key)">
               Remover
             </ion-button>
           </ion-card-content>

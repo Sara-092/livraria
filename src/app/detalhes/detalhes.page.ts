@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
   IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonBackButton,
-  IonSpinner, IonChip, IonButton,
+  IonChip, IonButton,
 } from '@ionic/angular/standalone';
 
 @Component({
@@ -11,59 +10,49 @@ import {
   templateUrl: './detalhes.page.html',
   imports: [
     IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonBackButton,
-    IonSpinner, IonChip, IonButton,
+    IonChip, IonButton,
   ],
 })
-export class DetalhesPage implements OnInit {
+export class DetalhesPage {
   id = '';
   livro: any = null;
-  carregando = true;
   favorito = false;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) {}
+  constructor(private route: ActivatedRoute, private cd: ChangeDetectorRef) {}
 
-  ngOnInit() {
+  
+  ionViewWillEnter() {
+  
     this.id = this.route.snapshot.paramMap.get('id') ?? '';
+    const chave = '/works/' + this.id;
 
-    
-    const lista = JSON.parse(localStorage.getItem('favoritos') || '[]');
-    this.favorito = lista.some((f: any) => f.id === this.id);
+    this.livro = null;
+    const fontes = ['fantasia', 'romance', 'ficcao', 'distopia', 'terror', 'favoritos'];
+    for (const nome of fontes) {
+      const lista = JSON.parse(localStorage.getItem(nome) || '[]');
+      const achado = lista.find((l: any) => l.key === chave);
+      if (achado) {
+        this.livro = achado;
+        break;
+      }
+    }
 
-    
-    this.http.get<any>(`https://openlibrary.org/works/${this.id}.json`).subscribe({
-      next: (res) => {
-        let descricao = 'Sem descrição disponível.';
-        if (typeof res.description === 'string') {
-          descricao = res.description;
-        } else if (res.description?.value) {
-          descricao = res.description.value;
-        }
-
-        this.livro = {
-          titulo: res.title,
-          descricao: descricao,
-          data: res.first_publish_date ?? 'Não informada',
-          assuntos: (res.subjects ?? []).slice(0, 8),
-          capa: res.covers?.[0]
-            ? `https://covers.openlibrary.org/b/id/${res.covers[0]}-L.jpg`
-            : '',
-        };
-        this.carregando = false;
-      },
-      error: () => (this.carregando = false),
-    });
+    const favoritos = JSON.parse(localStorage.getItem('favoritos') || '[]');
+    this.favorito = favoritos.some((f: any) => f.key === chave);
+    this.cd.detectChanges();
   }
 
   alternarFavorito() {
     let lista = JSON.parse(localStorage.getItem('favoritos') || '[]');
 
     if (this.favorito) {
-      lista = lista.filter((f: any) => f.id !== this.id);
+      lista = lista.filter((f: any) => f.key !== this.livro.key);
     } else {
-      lista.push({ id: this.id, titulo: this.livro.titulo, capa: this.livro.capa });
+      lista.push(this.livro);
     }
 
     localStorage.setItem('favoritos', JSON.stringify(lista));
     this.favorito = !this.favorito;
+    this.cd.detectChanges();
   }
 }
